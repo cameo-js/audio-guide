@@ -1,9 +1,10 @@
 import sbt._
 
 object Version {
-  val scalaTest     = "2.2.4"
+  val scalaTest     = "3.0.1"
   val akka          = "2.4.9"
   val scalaScraper  = "1.0.0"
+  val json4s        = "3.4.0"
 }
 
 object Library {
@@ -18,14 +19,20 @@ object Library {
     "com.typesafe.akka" %% "akka-testkit" % Version.akka
   )
   val scalaTest = List(
-    "org.scalatest" %% "scalatest" % Version.scalaTest
+    "org.scalatest" % "scalatest_2.11" % Version.scalaTest % "test"
   )
-  val scalaScraper = "net.ruippeixotog" %% "scala-scraper" % Version.scalaScraper
+  val scalaScraper = List(
+    "net.ruippeixotog" %% "scala-scraper" % Version.scalaScraper
+  )
+  val json4s = List(
+    "org.json4s" %% "json4s-jackson" % Version.json4s
+  )
+
 }
 
 object Dependencies {
 
   import Library._
 
-  val audioGuide = scalaScraper :: akka ::: akkaTest ::: scalaTest
+  val audioGuide = scalaScraper ::: akka ::: akkaTest ::: scalaTest ::: json4s
 }
