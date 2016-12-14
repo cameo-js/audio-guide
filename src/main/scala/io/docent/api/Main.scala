@@ -1,22 +1,16 @@
-import akka.actor.{Props, ActorSystem}
+package io.docent.api
+
+import akka.event.Logging
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
-import akka.stream.ActorMaterializer
-import domain.{Wikipedia, Google}
-import surpport.UrlSurpport._
 import akka.http.scaladsl.server.Directives._
-
-import scala.concurrent.Future
-import scala.util.Success
+import io.docent.api.domain.{Google, Wikipedia}
+import io.docent.api.surpport.UrlSurpport._
 
 /**
  * Created by kjs8469 on 2016. 7. 13..
  */
-object Main extends App{
-  implicit val system = ActorSystem("AudioGuide")
-  implicit val materializer = ActorMaterializer()
-  implicit val executionContext = system.dispatcher
-
+object Main extends App with ActorSystemProvider{
   val google = Google("www.google.co.kr")
   val wikipedia = Wikipedia("ko.wikipedia.org")
 

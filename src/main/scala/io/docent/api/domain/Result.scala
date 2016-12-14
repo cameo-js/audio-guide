@@ -1,4 +1,4 @@
-package domain
+package io.docent.api.domain
 
 import net.ruippeixotog.scalascraper.browser.JsoupBrowser
 import net.ruippeixotog.scalascraper.scraper.ContentExtractors._

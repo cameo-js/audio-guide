@@ -1,7 +1,7 @@
-package domain
+package io.docent.api.domain
 
 import org.scalatest.{AsyncFlatSpec, FlatSpec}
-import surpport.UrlSurpport._
+import io.docent.api.surpport.UrlSurpport._
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**

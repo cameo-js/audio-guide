@@ -1,4 +1,4 @@
-package surpport
+package io.docent.api.surpport
 
 import java.net.{URLEncoder, URL}
 
