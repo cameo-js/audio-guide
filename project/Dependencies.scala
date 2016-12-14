@@ -27,12 +27,14 @@ object Library {
   val json4s = List(
     "org.json4s" %% "json4s-jackson" % Version.json4s
   )
-
+  val utilities = List(
+    "ch.qos.logback" % "logback-classic" % "1.1.3"
+  )
 }
 
 object Dependencies {
 
   import Library._
 
-  val audioGuide = scalaScraper ::: akka ::: akkaTest ::: scalaTest ::: json4s
+  val audioGuide = scalaScraper ::: akka ::: akkaTest ::: scalaTest ::: json4s ::: utilities
 }
