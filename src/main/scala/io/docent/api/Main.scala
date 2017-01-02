@@ -7,6 +7,9 @@ import io.docent.api.domain.{Google, Wikipedia}
 import io.docent.api.surpport.UrlSurpport._
 import org.slf4j.LoggerFactory
 
+import scala.concurrent.Await
+import scala.concurrent.duration._
+
 /**
  * Created by kjs8469 on 2016. 7. 13..
  */
@@ -20,12 +23,16 @@ object Main extends App with ActorSystemProvider{
       get {
         log.info("query:{}",query)
         complete {
-          val wiki = for {
-            future <- google.search(getGooglePath(query))
-            result <- wikipedia.search(encodeWikiPath(Google.getTitles(future)(0)))
-          } yield result
-          wiki.map { body =>
-            HttpEntity(ContentTypes.`application/json`, s"${body.get.toJson}")
+          val results = for {
+            google <- google.search(getGooglePath(query))
+          } yield {
+            Google.getTitles(google).map{ title =>
+              Await.result(wikipedia.search(encodeWikiPath(title)), 3.seconds).map(_.toJson).getOrElse("")
+            }
+          }
+
+          results.map { body =>
+            HttpEntity(ContentTypes.`application/json`, s"${body.filter(_ != "").mkString("[",",","]")}")
           }
         }
       }
